@@ -76,14 +76,14 @@ def print_summary(networks, new_bssids, gone_bssids):
 
     for net in sorted(networks, key=lambda n: n.get("level", -999), reverse=True):
         ssid = net.get("ssid", "<hidden>")
-        level = net.get("level", "?")
-        freq = net.get("frequency", "?")
+        level = net.get("rssi", 0)
+        freq = net.get("frequency_mhz", 0)
         flag = " 🆕 NEW" if net.get("bssid") in new_bssids else ""
         print(f"  {ssid:25s} {level:>5} dBm  {freq} MHz{flag}")
 
     if gone_bssids:
-        print(f"  ⚠️  {len(gone_bssids)} previously seen network(s) not detected this scan")
 
+	        print(f"  ⚠️  {len(gone_bssids)} previously seen network(s) not detected this scan")
 def main():
     conn = init_db()
     known_bssids = get_known_bssids(conn)
